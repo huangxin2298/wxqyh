@@ -1,9 +1,12 @@
 package cn.edu.zhku.jsj.huangxin.component.base.model;
 
+import java.util.Date;
+
 public class UserPO implements IBasePO {
     private String id;
     private String userName;
     private String password;
+    private Date birthday;
 
     public String getId() {
         return id;
@@ -29,6 +32,14 @@ public class UserPO implements IBasePO {
         this.password = password;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String _getTableName() {
         return "tb_user_info";
@@ -47,5 +58,15 @@ public class UserPO implements IBasePO {
     @Override
     public void _setPKValue(Object id) {
         this.id = (java.lang.String)id;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPO{" +
+                "id='" + id + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

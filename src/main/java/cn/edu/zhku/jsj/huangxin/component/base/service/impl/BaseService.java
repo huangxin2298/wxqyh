@@ -3,15 +3,13 @@ package cn.edu.zhku.jsj.huangxin.component.base.service.impl;
 import cn.edu.zhku.jsj.huangxin.component.base.dao.BaseDao;
 import cn.edu.zhku.jsj.huangxin.component.base.model.IBasePO;
 import cn.edu.zhku.jsj.huangxin.component.base.service.IBaseService;
-import cn.edu.zhku.jsj.huangxin.component.base.util.AssertUtil;
-import cn.edu.zhku.jsj.huangxin.component.base.util.BaseUtil;
+import cn.edu.zhku.jsj.huangxin.component.base.util.AssertUtils;
+import cn.edu.zhku.jsj.huangxin.component.base.util.BaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static javafx.scene.input.KeyCode.T;
 
 public class BaseService implements IBaseService{
     private BaseDao baseDao;
@@ -25,7 +23,7 @@ public class BaseService implements IBaseService{
     }
     public void insertPO(IBasePO po){
         if(po != null){
-            Map<String, Object> fieldMap = BaseUtil.getFieldMap(po);
+            Map<String, Object> fieldMap = BaseUtils.getFieldMap(po);
             if(fieldMap != null && fieldMap.size() > 0){
                 baseDao.insertPO(po._getTableName(),fieldMap);
             }
@@ -35,7 +33,7 @@ public class BaseService implements IBaseService{
     @Override
     public void batchInsertPO(List<? extends IBasePO> poList) {
         if(poList != null && poList.size() > 0){
-            List<Map<String ,Object>> filedMapList = BaseUtil.getFieldMapList(poList);
+            List<Map<String ,Object>> filedMapList = BaseUtils.getFieldMapList(poList);
             baseDao.batchInsertPO(poList.get(0)._getTableName(),filedMapList);
         }
     }
@@ -43,7 +41,7 @@ public class BaseService implements IBaseService{
     @Override
     public void updatePO(IBasePO po) {
         if(po != null){
-            Map<String, Object> fieldMap = BaseUtil.getFieldMap(po);
+            Map<String, Object> fieldMap = BaseUtils.getFieldMap(po);
             if(fieldMap != null && fieldMap.size() > 0){
                 fieldMap.remove(po._getPKName());//去掉主键
                 Map<String, Object> paramMap = new HashMap<>();
@@ -55,7 +53,7 @@ public class BaseService implements IBaseService{
 
     @Override
     public void deletePO(Class<? extends IBasePO> clazz,Object pkValue) {
-        if(!AssertUtil.isEmpty(pkValue)){
+        if(!AssertUtils.isEmpty(pkValue)){
             try {
                 Map<String, Object> paramMap = new HashMap<>();
                 IBasePO basePO = clazz.newInstance();
@@ -89,12 +87,14 @@ public class BaseService implements IBaseService{
     @Override
     public<T extends IBasePO> T searchPOByPk(Class<T> clazz, Object pkValue) {
         T basePO = null;
-        if(!AssertUtil.isEmpty(pkValue)){
+        if(!AssertUtils.isEmpty(pkValue)){
             try {
                 Map<String, Object> paramMap = new HashMap<>();
                 basePO = clazz.newInstance();
                 paramMap.put(basePO._getPKName(),pkValue);
                 Map<String, Object> fieldMap = baseDao.searchPOByPk(basePO._getTableName(),paramMap);
+                basePO = BaseUtils.mapToPO(fieldMap,clazz);
+                System.out.println(fieldMap);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class BaseUtil {
+public class BaseUtils {
 
     private static Logger logger = Logger.getRootLogger();
 
@@ -63,11 +63,24 @@ public class BaseUtil {
 
     /**
      * 将map转成实体
-     * @param ColumnMap
-     * @param object
+     * @param columnMap
+     * @param clazz
      */
-    public static void mapToObject(Map<String,Object> ColumnMap,Object object){
-
+    public static<T extends IBasePO> T mapToPO(Map<String,Object> columnMap,Class<T> clazz) throws
+            IllegalAccessException, InstantiationException {
+        T basePO = null;
+        Field[] fields = clazz.getDeclaredFields();
+        if(fields != null && fields.length>0){
+            basePO = clazz.newInstance();
+            for(Field field : fields){
+                String fieldName = getColumnName(field.getName());
+                if(columnMap.containsKey(fieldName)){
+                    field.setAccessible(true);
+                    field.set(basePO,columnMap.get(fieldName));
+                }
+            }
+        }
+        return basePO;
     }
 
     //通过字段名获取字段值
@@ -100,31 +113,7 @@ public class BaseUtil {
             return null;
         }
     }
-    //获取属性名（实体属性为驼峰式命名，数据库列名为下划线分隔命名）
-    private static String getFieldName(String ColumnName) {
 
-        if(ColumnName != null){
-            char[] chars = ColumnName.toCharArray();
-            StringBuffer sb = new StringBuffer();
-            Boolean isUp = false;
-            for (char c : chars) {
-                if (c == '_') {
-                    isUp = true;
-                } else {
-                    if(isUp){
-                        isUp = false;
-                        sb.append(Character.toUpperCase(c));
-                    }else{
-                        sb.append(c);
-                    }
-                }
-            }
-            return sb.toString();
-        }else{
-            return null;
-        }
-
-    }
     public static void main(String[] args) {
         /*UserPO userPO = new UserPO();
         userPO.setId(UUID.randomUUID().toString());
@@ -141,12 +130,18 @@ public class BaseUtil {
         userList.add(userPO2);
         List<Map<String ,Object>> fieldMapList = getFieldMapList(userList);
         System.out.print(fieldMapList);*/
-        UserPO userPO = new UserPO();
         Map<String , Object> columnMap = new HashMap<>();
         columnMap.put("id","123");
         columnMap.put("user_name","huangxin");
-        columnMap.put("password","123");
-        mapToObject(columnMap,userPO);
-        System.out.println(userPO.getId());
+        columnMap.put("password","123123");
+        try {
+            UserPO userPO = mapToPO(columnMap,UserPO.class);
+            System.out.println(userPO);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 }

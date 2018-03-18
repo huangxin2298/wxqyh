@@ -2,7 +2,7 @@ package cn.edu.zhku.jsj.huangxin.component.base.util;
 
 import java.util.List;
 
-public class AssertUtil {
+public class AssertUtils {
 
     /**
      * 判断对象为空
