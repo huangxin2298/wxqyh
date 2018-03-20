@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/jsp/context.jsp" %>
-
 <html lang="zh-CN">
 <head>
 	<meta charset="utf-8">
@@ -23,42 +22,26 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
 
-<body>
-
-<div class="container">
-
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">管理后台</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="javascript:changePage(0)">我的应用</a></li>
-					<li><a href="javascript:changePage(1)">通讯录</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="javascript:changePage(2)">设置</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<iframe  name="topFrame" id="topFrame" src="application/main.jsp" width="100%" height="560px;" frameborder="0" style="overflow-x:hidden;overflow-y:auto;z-index:600" >
-	</iframe>
-</div>
+<body style="padding-top: 0px;padding-bottom: 0px;">
+<nav class="navbar navbar-default" style="float:left;width:18%">
+	<ul class="nav nav-tabs nav-stacked">
+		<li><a href="#">Tutorials</a></li>
+		<li><a href="#">Practice Editor </a></li>
+		<li><a href="#">Gallery</a></li>
+		<li><a href="#">Contact</a></li>
+		<li><a href="#">Gallery</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</nav>
+<iframe  name="appFrame" id="appFrame" src="" width="81%" height="560px" frameborder="0"
+		 style="margin-left:1%;float:left;overflow-x:hidden;overflow-y:auto;" >
+</iframe>
 <script src="${baseURL}/common/js/jquery.min.js"></script>
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
-	function changePage(num){
-        if(num==0){
-			$("#topFrame").attr("src","application/main.jsp");
-        }else if(num==1){
-            $("#topFrame").attr("src","addressbook/main.jsp");
-		}else if(num==2){
-            $("#topFrame").attr("src","setting/main.jsp");
-		}
+	function loadAppPage(appSrc){
+		$("#appFrame").attr("src",${baseURL}+"appSrc");
 	}
-
 </script>
 </body>
 </html>
