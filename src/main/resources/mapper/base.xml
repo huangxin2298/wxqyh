@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zhku.jsj.huangxin.component.base.dao.BaseDao">
+    <insert id="insertPO">
+        INSERT INTO ${tableName}
+        <foreach collection="fieldMap.keys" item="key" open="(" close=")" separator=",">
+            ${key}
+        </foreach>
+        VALUES
+        <foreach collection="fieldMap.keys" item="key" open="(" close=")" separator=",">
+            #{fieldMap.[${key}]}
+        </foreach>
+    </insert>
+    <insert id="batchInsertPO">
+        INSERT INTO ${tableName}
+        <foreach collection="fieldMapList[0].keys" item="key" open="(" close=")" separator=",">
+            ${key}
+        </foreach>
+        VALUES
+        <foreach collection="fieldMapList" item="fieldMap"  separator=",">
+            <foreach collection="fieldMap.keys" item="key" open="(" close=")" separator=",">
+                #{fieldMap.[${key}]}
+            </foreach>
+        </foreach>
+    </insert>
+    <update id="updatePO">
+        UPDATE ${tableName} set
+        <foreach collection="fieldMap.keys" item="key" separator=",">
+             ${key}=#{fieldMap.[${key}]}
+        </foreach>
+        <where>
+            <foreach collection="paramMap.keys" item="key" separator="and">
+                ${key}=#{paramMap.[${key}]}
+            </foreach>
+        </where>
+    </update>
+    <delete id="deletePO">
+        DELETE FROM ${tableName}
+        <where>
+            <foreach collection="paramMap.keys" item="key" separator="and">
+                ${key}=#{paramMap.[${key}]}
+            </foreach>
+        </where>
+    </delete>
+    <delete id="batchDeletePO">
+        DELETE FROM ${tableName}
+        <where>
+            <foreach collection="paramMap.keys" item="key" separator="and">
+                ${key} IN
+                <foreach collection="paramMap[key]" item="value" open="(" close=")" separator=",">
+                    #{value}
+                </foreach>
+            </foreach>
+        </where>
+    </delete>
+    <select id="searchPOByPk" resultType="java.util.Map">
+        SELECT * FROM ${tableName}
+        <where>
+            <foreach collection="paramMap.keys" item="key" separator="and">
+                ${key}=#{paramMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+</mapper>
