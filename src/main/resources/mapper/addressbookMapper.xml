@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zhku.jsj.huangxin.component.addressbook.dao.AddressbookDAO">
+    <select id="getAccessTokenPO" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.AccessTokenPO">
+        SELECT * FROM tb_access_token
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getAgentPO" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO">
+        SELECT * FROM tb_agent_info WHERE agent_code = #{agentCode}
+    </select>
+    <select id="getAdminUser" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.AdminUserPO">
+        SELECT * FROM tb_admin_user
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getDepartmentInfo" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbDepartmentInfoPO">
+        SELECT * FROM tb_department_info
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+</mapper>

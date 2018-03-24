@@ -1,0 +1,144 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+.mt10{
+    margin-top: 10px;
+}
+.ml10{
+    margin-left: 10px;
+}
+.mb10{
+    margin-bottom: 10px;
+}
+.mr10{
+    margin-right: 10px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+
+.btn {
+    padding: 5px 20px;
+    _padding: 5px 20px;
+    font-size: 14px;
+    line-height: 30px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    color: #333333;
+    background-color: #fff;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+}
+.orangeBtn {
+    background: #ff9600;
+    color: #fff;
+    border: 1px solid #e2750a;
+}
+.orangeBtn:hover {
+    background: #ff4e00;
+    color: #fff;
+    border: 1px solid #cf4306;
+}
+.smallBtn {
+    line-height: 20px!important;
+    padding: 5px 15px!important;
+}
+.searchBox {
+    width: 210px;
+    height: 30px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid #cccccc;
+    background: #fff;
+    position: relative;
+}
+.inputSearchBox {
+    width: 165px;
+    border: 0px solid #ffffff;
+    color: #333;
+    margin-left: 4px;
+    line-height: 26px;
+    font-family: inherit;
+    vertical-align: top;
+}
+.senior_search_btn {
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    height: 35px;
+    line-height: 16.5px;
+    margin: 0 5px;
+    padding: 0 3px;
+    text-align: center;
+    width: 30px;
+}
+.submitSearchBtn {
+    background: url(../images/search_icon.png) no-repeat center center;
+    width: 32px;
+    height: inherit;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 1px solid #ccc;
+}
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    font-size: 14px;
+}
+.table {
+    margin-bottom: 0;
+}
+.table-line {
+    border: none;
+}
+.table thead {
+    background: #f8f8f8;
+    font-weight: bold;
+}
+.borderline {
+    border-right: 1px dashed #cfcfcf;
+    margin-right: 8px;
+    margin-left: 5px;
+}
+.lasttd {
+    position: relative;
+}
+.lasttdpop {
+    background: none repeat scroll 0 0 black;
+    border-radius: 4px;
+    box-shadow: 0 0 10px black;
+    height: 36px;
+    max-width: 400px;
+    padding: 8px 20px;
+    position: absolute;
+    right: 70%;
+    text-align: center;
+    top: 10px;
+}
+.lasttdpop a {
+    color: white;
+    text-decoration: none;
+    outline: medium none;
+    width: 40px;
+    display: inline-block;
+    padding: 0 5px;
+}
+.contact_action {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    padding: 3px 10px;
+}
+.navbar {
+    margin-bottom: 20px;
+}

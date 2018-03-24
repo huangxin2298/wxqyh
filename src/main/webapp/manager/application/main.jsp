@@ -11,18 +11,20 @@
 
 	<title>管理后台</title>
 
-	<link href="${baseURL}/common/css/bootstrap.min.css" rel="stylesheet">
+	<link href="${baseURL}/common/css/bootstrap.css" rel="stylesheet">
 	<link href="${baseURL}/common/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-	<link href="${baseURL}/themes/manager/login/css/navbar.css" rel="stylesheet">
+	<link href="${baseURL}/themes/manager/common/css/common.css" rel="stylesheet">
+
 
 	<script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
 	<script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
+
 
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
 
-<body style="padding-top: 0px;padding-bottom: 0px;">
+<body style="padding:0px;margin: 0px">
 <nav class="navbar navbar-default" style="float:left;width:18%">
 	<ul class="nav nav-tabs nav-stacked">
 		<li><a href="#">Tutorials</a></li>

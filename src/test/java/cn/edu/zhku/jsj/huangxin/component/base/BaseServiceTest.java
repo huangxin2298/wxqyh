@@ -3,6 +3,7 @@ import cn.edu.zhku.jsj.huangxin.component.base.model.UserPO;
 import cn.edu.zhku.jsj.huangxin.component.base.service.IUserService;
 import cn.edu.zhku.jsj.huangxin.component.base.util.HttpUtils;
 import cn.edu.zhku.jsj.huangxin.component.base.util.RedisUtils;
+import cn.edu.zhku.jsj.huangxin.component.base.util.WeiXinUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -78,7 +79,8 @@ public class BaseServiceTest{
     }
     @Test
     public void redisTest(){
-        RedisUtils.set("userName","HuangXin");
+        RedisUtils.set("userName","HuangXin",7000);
+        System.out.println("_______________"+RedisUtils.hasKey("userName"));
         System.out.println(RedisUtils.get("userName"));
     }
     @Test
@@ -91,5 +93,10 @@ public class BaseServiceTest{
         map.put("access_token","uARO4qjL-zkGlif2J1OPp4KxT7xOWe4jZ5ftRmg-RwNx_Dfi_KAmCR2WoVJG40N6gND-jA8CusZ7ClEDBY38oPXOwtJNDXmOoSJfa4crL6FNlQlUM3xxk-sE94mlepEAY3-YlqXY4iUD9kiOOQTugftSpHVa7Uo_etow8WmsGbh-1MNc0Ozc9TlG-QapNuuw7-5HEKbQxoiTafbhcviEEA");
         map.put("agentid","1000004");
         System.out.println(HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/agent/get",map));
+    }
+    @Test
+    public void weiXinUtilTest(){
+        String accessCode = WeiXinUtils.getAccessToken("org","1");
+        System.out.println("------------\n"+accessCode);
     }
 }

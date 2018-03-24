@@ -1,0 +1,7 @@
+.innerbox{
+    border:1px solid #d9dadc;
+    overflow-x:hidden;
+    overflow-y:auto;
+    z-index:600;
+    background: #f6f6f6;
+}
