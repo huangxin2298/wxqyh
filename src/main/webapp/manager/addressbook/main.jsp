@@ -21,14 +21,14 @@
     <script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
     <script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
 
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="${baseURL}/common/js/html5shiv.min.js"></script>
+    <script src="${baseURL}/common/js/respond.min.js"></script>
 </head>
 
 <body>
 <div>
     <div class="zTreeDemoBackground left" style="float:left;">
-        <ul id="treeDemo" class="ztree"></ul>
+        <ul id="ztree" class="ztree"></ul>
     </div>
     <div style="width:77%;height:100%;float:left">
         <iframe style="margin-top: 20px" name="depFrame" id="depFrame" src="${baseURL}/manager/addressbook/detail.jsp" width="100%" height="96%" frameborder="0" ></iframe>
@@ -57,7 +57,7 @@
         }
     };
 
-    var zNodes =[
+    var zNodes/*=[
         { id:1, pId:0, name:"文件夹", open:true},
         { id:11, pId:1, name:"收件箱"},
         { id:111, pId:11, name:"收件箱1"},
@@ -71,7 +71,7 @@
         { id:3, pId:0, name:"快速视图"},
         { id:31, pId:3, name:"文档"},
         { id:32, pId:3, name:"照片"}
-    ];
+    ];*/
 
     function addDiyDom(treeId, treeNode) {
         var spaceWidth = 5;
@@ -88,7 +88,7 @@
 
     function beforeClick(treeId, treeNode) {
         if (treeNode.level == 0 ) {
-            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            var zTree = $.fn.zTree.getZTreeObj("ztree");
             zTree.expandNode(treeNode);
             return false;
         }
@@ -96,21 +96,55 @@
     }
 
     $(document).ready(function(){
-        var treeObj = $("#treeDemo");
-        $.fn.zTree.init(treeObj, setting, zNodes);
-        zTree_Menu = $.fn.zTree.getZTreeObj("treeDemo");
-        curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
-        zTree_Menu.selectNode(curMenu);
+        getDeptList();
+        window.setTimeout(function(){
+            console.log(zNodes)
+            var treeObj = $("#ztree");
+            $.fn.zTree.init(treeObj, setting, zNodes);
+            zTree_Menu = $.fn.zTree.getZTreeObj("ztree");
+            curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
+            zTree_Menu.selectNode(curMenu);
 
-        treeObj.hover(function () {
-            if (!treeObj.hasClass("showIcon")) {
-                treeObj.addClass("showIcon");
-            }
-        }, function() {
-            treeObj.removeClass("showIcon");
-        });
+            treeObj.hover(function () {
+                if (!treeObj.hasClass("showIcon")) {
+                    treeObj.addClass("showIcon");
+                }
+            }, function() {
+                treeObj.removeClass("showIcon");
+            });
+        },500);
     });
-
+    function getDeptList(){
+        $.ajax({
+            url: "${baseURL}/manager/addressbook/getDepartmentList.action",
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function(result) {
+                if(result.code == "0"){
+                    var deptList = result.data;
+                    if(typeof (deptList)!="undefined" && deptList != null && deptList.length>0){
+                        var znodeStr = "[";
+                        for(var i=0;i<deptList.length;i++){
+                            znodeStr += "{ \"id\":\""+deptList[i].id+"\",\"pId\":\""+deptList[i].parentDepart+"\",\"name\":\""+deptList[i].departmentName+"\",\"open\":true,\"click\":\"loadDeptUser('"+deptList[i].id+"');\"},";
+                        }
+                        znodeStr = znodeStr.substring(0,znodeStr.length-1);
+                        znodeStr += "]";
+                        console.log(znodeStr)
+                        zNodes = $.parseJSON(znodeStr);
+                    }
+                } else {
+                    alert(result.describe);
+                }
+            },
+            error: function() {
+                alert("系统繁忙，请稍后重试");
+            }
+        })
+    }
+    function loadDeptUser(deptId){
+        $("#depFrame").attr("src","${baseURL}/manager/addressbook/detail.jsp?deptId="+deptId);
+    }
 </script>
 </body>
 </html>

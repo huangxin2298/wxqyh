@@ -19,27 +19,55 @@
 	<script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
 	<script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
 
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="${baseURL}/common/js/html5shiv.min.js"></script>
+	<script src="${baseURL}/common/js/respond.min.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-	<form class="form-signin">
+	<form class="form-signin" id="userForm">
 		<h2 class="form-signin-heading">管理后台登录</h2>
-		<label for="inputUserName" class="sr-only">用户名</label>
-		<input type="text" id="inputUserName" class="form-control" placeholder="用户名" required autofocus>
-		<label for="inputPassword" class="sr-only">密码</label>
-		<input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-		<button class="btn btn-lg btn-primary btn-block">登录</button>
+		<label for="userName" class="sr-only">用户名</label>
+		<input type="text" id="userName" name="userName" class="form-control" placeholder="用户名" required autofocus>
+		<label for="password" class="sr-only">密码</label>
+		<input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
+		<input type="button" class="btn btn-lg btn-primary btn-block" value="登录" onclick="loginAdminUser()">
 	</form>
 
 </div>
+<script src="${baseURL}/common/js/jquery.min.js"></script>
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
-
+	function loginAdminUser(){
+		if($("#userName")==""){
+		    alert("用户名不能为空");
+		    return;
+		}
+		if($("#password")==""){
+		    alert("密码不能为空");
+		    return;
+		}
+		var form = $("#userForm").serialize();
+        $.ajax({
+            url: "${baseURL}/manager/addressbook/authUser.action",
+			data: form,
+            type: "POST",
+			dataType: "json",
+            success: function(result) {
+                if(result.code == "0"){
+                    alert(result.describe);
+					window.location.href = "${baseURL}/manager/index.jsp";
+                } else {
+                    alert(result.describe);
+                }
+            },
+            error: function() {
+                alert("系统繁忙，请稍后重试");
+            }
+        })
+	}
 </script>
 </body>
 </html>

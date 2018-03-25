@@ -31,4 +31,41 @@
             </foreach>
         </where>
     </select>
+    <select id="getUserInfo" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbUserInfoPO">
+        SELECT * FROM tb_user_info
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getAdminUserInfo" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbAdminUserPO">
+        SELECT * FROM tb_admin_user
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getDepartmentList" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbDepartmentInfoPO">
+        SELECT * FROM tb_department_info
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getUserList" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbUserInfoPO">
+        SELECT * FROM tb_user_info
+        <where>
+            org_id = #{searchMap.org_id}
+            <if test="searchMap.deptId!=null">
+                AND dept_id = #{searchMap.dept_id}
+            </if>
+            <if test="searchMap.inputSearch!=null">
+                AND (user_name like #{searchMap.inputSearch} OR mobile like #{searchMap.inputSearch})
+            </if>
+        </where>
+        ORDER BY user_name
+    </select>
 </mapper>

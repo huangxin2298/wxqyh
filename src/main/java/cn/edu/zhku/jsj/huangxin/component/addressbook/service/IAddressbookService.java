@@ -1,9 +1,7 @@
 package cn.edu.zhku.jsj.huangxin.component.addressbook.service;
 
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AccessTokenPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AdminUserPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbDepartmentInfoPO;
+import cn.edu.zhku.jsj.huangxin.component.addressbook.model.*;
+import cn.edu.zhku.jsj.huangxin.component.base.model.Page;
 import cn.edu.zhku.jsj.huangxin.component.base.service.IBaseService;
 
 import java.util.List;
@@ -37,4 +35,30 @@ public interface IAddressbookService extends IBaseService {
 	 * @return TbDepartmentInfoPO
 	 */
 	TbDepartmentInfoPO getDepartmentInfo(Map<String, Object> searchMap);
+
+	/**
+	 * 获取用户详情
+	 * @param searchMap
+	 * @return TbUserInfoPO
+	 */
+	TbUserInfoPO getUserInfo(Map<String, Object> searchMap);
+	/**
+	 * 获取后台登录用户详情
+	 * @param searchMap
+	 * @return TbAdminUserPO
+	 */
+	TbAdminUserPO getAdminUserInfo(Map<String, Object> searchMap);
+
+	/**
+	 * 获取部门列表
+	 * @param searchMap
+	 * @return List<TbDepartmentInfoPO>
+	 */
+	List<TbDepartmentInfoPO> getDepartmentList(Map<String, Object> searchMap);
+	/**
+	 * 获取用户列表
+	 * @param searchMap
+	 * @param page 分页对象
+	 */
+	void getUserList(Map<String, Object> searchMap, Page<TbUserInfoPO> page);
 }

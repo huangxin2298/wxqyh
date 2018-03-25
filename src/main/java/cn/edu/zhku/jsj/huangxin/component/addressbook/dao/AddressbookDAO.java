@@ -1,9 +1,6 @@
 package cn.edu.zhku.jsj.huangxin.component.addressbook.dao;
 
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AccessTokenPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AdminUserPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbDepartmentInfoPO;
+import cn.edu.zhku.jsj.huangxin.component.addressbook.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,4 +15,12 @@ public interface AddressbookDAO {
 	AdminUserPO getAdminUser(@Param("searchMap")Map<String, Object> searchMap);
 
 	TbDepartmentInfoPO getDepartmentInfo(@Param("searchMap")Map<String, Object> searchMap);
+
+	TbUserInfoPO getUserInfo(@Param("searchMap")Map<String, Object> searchMap);
+
+	TbAdminUserPO getAdminUserInfo(@Param("searchMap")Map<String, Object> searchMap);
+
+	List<TbDepartmentInfoPO> getDepartmentList(@Param("searchMap")Map<String, Object> searchMap);
+
+	List<TbUserInfoPO> getUserList(@Param("searchMap")Map<String, Object> searchMap);
 }

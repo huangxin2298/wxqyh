@@ -45,7 +45,6 @@
     function hideLoading(){
         $("#loading").hide();
     }
-    showLoading()
 </script>
 </body>
 </html>

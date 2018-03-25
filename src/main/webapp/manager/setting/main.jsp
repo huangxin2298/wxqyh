@@ -18,8 +18,8 @@
 	<script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
 	<script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
 
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="${baseURL}/common/js/html5shiv.min.js"></script>
+	<script src="${baseURL}/common/js/respond.min.js"></script>
 </head>
 
 <body style="padding-top: 0px;padding-bottom: 0px;">

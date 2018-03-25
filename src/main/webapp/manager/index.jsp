@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/jsp/context.jsp" %>
+<%@include file="/common/jsp/authUser.jsp" %>
 <html lang="zh-CN">
 <head>
 	<meta charset="utf-8">
@@ -20,8 +21,8 @@
 	<script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
 	<script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
 
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="${baseURL}/common/js/html5shiv.min.js"></script>
+	<script src="${baseURL}/common/js/respond.min.js"></script>
 </head>
 
 <body style="margin-top:20px;margin-bottom: 20px">
@@ -41,14 +42,13 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="javascript:changePage(2)">设置</a></li>
 				</ul>
-				<span style="float: right;margin-top: 15px">管理员<a href="javascript:void(0)" style="margin-left: 6px">退出</a></span>
+				<span style="float: right;margin-top: 15px">${adminUser.userName}<a href="javascript:loginOutAdminUser()" style="margin-left: 6px">退出</a></span>
 			</div>
 		</div>
 	</nav>
 	<iframe name="topFrame" class="innerbox" id="topFrame" src="application/main.jsp" width="100%" height="640px;" frameborder="0" >
 	</iframe>
 </div>
-<%@include file="/common/jsp/showMsg.jsp"%>
 <script src="${baseURL}/common/js/jquery.min.js"></script>
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
@@ -61,7 +61,24 @@
             $("#topFrame").attr("src","setting/main.jsp");
 		}
 	}
-
+	function loginOutAdminUser(){
+        $.ajax({
+            url: "${baseURL}/manager/addressbook/loginOutAdminUser.action",
+            type: "POST",
+            dataType: "json",
+            success: function(result) {
+                if(result.code == "0"){
+                    alert(result.describe);
+                    window.location.href = "${baseURL}/manager/login.jsp";
+                } else {
+                    alert(result.describe);
+                }
+            },
+            error: function() {
+                alert("系统繁忙，请稍后重试");
+            }
+        })
+	}
 </script>
 </body>
 </html>

@@ -1,12 +1,12 @@
 package cn.edu.zhku.jsj.huangxin.component.addressbook.service.impl;
 
 import cn.edu.zhku.jsj.huangxin.component.addressbook.dao.AddressbookDAO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AccessTokenPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AdminUserPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO;
-import cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbDepartmentInfoPO;
+import cn.edu.zhku.jsj.huangxin.component.addressbook.model.*;
 import cn.edu.zhku.jsj.huangxin.component.addressbook.service.IAddressbookService;
+import cn.edu.zhku.jsj.huangxin.component.base.model.Page;
 import cn.edu.zhku.jsj.huangxin.component.base.service.impl.BaseService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,5 +47,32 @@ public class AddressbookServiceImpl extends BaseService implements IAddressbookS
 	@Override
 	public TbDepartmentInfoPO getDepartmentInfo(Map<String, Object> searchMap) {
 		return addressbookDAO.getDepartmentInfo(searchMap);
+	}
+
+	@Override
+	public TbUserInfoPO getUserInfo(Map<String, Object> searchMap) {
+		return addressbookDAO.getUserInfo(searchMap);
+	}
+
+	@Override
+	public TbAdminUserPO getAdminUserInfo(Map<String, Object> searchMap) {
+		return addressbookDAO.getAdminUserInfo(searchMap);
+	}
+
+	@Override
+	public List<TbDepartmentInfoPO> getDepartmentList(Map<String, Object> searchMap) {
+		return addressbookDAO.getDepartmentList(searchMap);
+	}
+
+	@Override
+	public void getUserList(Map<String, Object> searchMap, Page<TbUserInfoPO> page) {
+
+		PageHelper.startPage(page.getCurPage(), page.getPageSize());
+		List<TbUserInfoPO> list = addressbookDAO.getUserList(searchMap);
+		PageInfo<TbUserInfoPO> pageInfo = new PageInfo<>(list);
+		page.setData(list);
+		page.setTotalPages(pageInfo.getPages());
+		page.setTotalRows((int) pageInfo.getTotal());
+
 	}
 }

@@ -102,4 +102,23 @@ public class WeiXinUtils {
 		}
 		return HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/department/list",map);
 	}
+
+	/**
+	 * 获取部门成员详情
+	 * @param accessToken 调用接口凭证
+	 * @param deptWxId 	获取的部门id
+	 * @param isFetchChild 	是否递归获取子部门的成员(0-否，1-是)
+	 * @return HttpResult
+	 */
+	public static HttpResult getUserList(String accessToken, String deptWxId, String isFetchChild){
+		HttpResult httpResult = new HttpResult();
+		Map<String, String> map = new HashMap<>();
+		map.put("access_token",accessToken);
+		map.put("department_id",deptWxId);
+		if(!AssertUtils.isEmpty(isFetchChild) && ("1".equals(isFetchChild) || "0".equals(isFetchChild))){
+			map.put("fetch_child",isFetchChild);
+		}
+		httpResult = HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/user/list",map);
+		return httpResult;
+	}
 }
