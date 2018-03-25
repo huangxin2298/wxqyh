@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/jsp/context.jsp" %>
+<%@include file="/common/jsp/authUser.jsp" %>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -28,9 +29,9 @@
         <div class="fl flMainBar" style="margin-top: 6px;">
             <a id="sync" href="javascript:sync()" class="btn orangeBtn smallBtn">同步</a>
             <span class="borderline"></span>
-            <a id="" href="javascript:void(0);" onclick="" class="btn orangeBtn smallBtn">新增</a>
+            <a id="" href="javascript:addUser();" onclick="" class="btn orangeBtn smallBtn">新增</a>
         </div>
-        <a class="senior_search_btn">高级搜索</a>
+        <%--<a class="senior_search_btn">高级搜索</a>--%>
         <div class="fr">
             <div class="searchBox">
                 <input type="hidden" name="deptId" value="${param.deptId}">
@@ -176,7 +177,34 @@
             }
         })
     }
-
+    function doEdit(userId){
+        document.location.href = "${baseURL}/manager/addressbook/user/userEdit.jsp?userId="+userId;
+    }
+    function doDel(userId){
+        if(!confirm("您确定要删除该成员？")){
+            return;
+        }
+        $.ajax({
+            url: "${baseURL}/manager/addressbook/delUserById.action",
+            type: "POST",
+            data: {"userId":userId},
+            dataType: "json",
+            success: function(result) {
+                if(result.code == "0"){
+                    alert(result.describe);
+                    getUserList(1);
+                } else {
+                    alert(result.describe);
+                }
+            },
+            error: function() {
+                alert("系统繁忙，请稍后重试");
+            }
+        })
+    }
+    function addUser(){
+        document.location.href = "${baseURL}/manager/addressbook/user/userAdd.jsp";
+    }
     //同步微信的数据到服务器
     function sync() {
         if (!confirm("您确定要从微信端同步数据到服务器?")) {

@@ -61,4 +61,23 @@ public interface IAddressbookService extends IBaseService {
 	 * @param page 分页对象
 	 */
 	void getUserList(Map<String, Object> searchMap, Page<TbUserInfoPO> page);
+
+	/**
+	 * 更新用户信息
+	 * @param userInfo
+	 */
+	String updateUser(TbUserInfoPO userInfo);
+
+	/**
+	 * 删除成员
+	 * @param userId 成员id
+	 * @return
+	 */
+	String delUserById(String userId);
+	/**
+	 * 添加成员
+	 * @param tbUserInfoPO 成员信息
+	 * @return
+	 */
+	String addUser(TbUserInfoPO tbUserInfoPO);
 }

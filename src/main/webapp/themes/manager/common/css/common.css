@@ -178,3 +178,67 @@ bottomPage {
     color: #fff;
     text-decoration:none
 }
+.cTitle {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #dbdbdd;
+    height: 47px;
+    line-height: 47px;
+    margin-top: 15px;
+    padding-left: 20px;
+    font-size: 16px;
+}
+.cMain {
+    margin-top: 20px;
+    position: relative;
+}
+.form .form-item {
+    margin-bottom: 9px;
+    clear: both;
+}
+.new_form .form-item .title {
+    float: left;
+    width: 140px;
+    text-align: right;
+    line-height: 32px;
+    font-size: 14px;
+}
+.new_form .form-field {
+    margin-left: 150px;
+    font-size: 14px;
+}
+.input-text {
+    padding: 6px 4px;
+    margin: 0;
+}
+.form-text {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 290px;
+}
+.form select {
+    border: 1px solid #cccccc;
+    width: 290px;
+    border-radius: 4px;
+    padding: 4px;
+}
+.form .form-field-rc, .form input, .form textarea, .form select, .form .form-text {
+    margin-bottom: 9px;
+}
+.form .form-text, .form textarea {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.form .form-action {
+    clear: both;
+    text-align: center;
+}
+.tcform_action {
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.mustInput{
+    color:red;
+}

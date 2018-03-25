@@ -14,6 +14,7 @@ public class TbUserInfoPO implements IBasePO {
 	private String mobile;
 	private String email;
 	private String deptId;
+	private String deptName;
 	private String sex;
 	private String position;
 	private Integer isLeader;
@@ -87,6 +88,14 @@ public class TbUserInfoPO implements IBasePO {
 
 	public void setDeptId(String deptId) {
 		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 
 	public String getSex() {

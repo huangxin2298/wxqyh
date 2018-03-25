@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/jsp/context.jsp" %>
+<%@include file="/common/jsp/authUser.jsp" %>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">

@@ -5,6 +5,8 @@ import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO;
 import cn.edu.zhku.jsj.huangxin.component.addressbook.model.OrgPO;
 import cn.edu.zhku.jsj.huangxin.component.addressbook.service.IAddressbookService;
 import cn.edu.zhku.jsj.huangxin.component.base.model.HttpResult;
+import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinUser;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,4 +123,43 @@ public class WeiXinUtils {
 		httpResult = HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/user/list",map);
 		return httpResult;
 	}
+	/**
+	 * 更新成员
+	 * @param accessToken 调用接口凭证
+	 * @param weiXinUser 微信用户信息
+	 * @return HttpResult
+	 */
+	public static HttpResult updateUser(String accessToken, WeiXinUser weiXinUser){
+		HttpResult httpResult = new HttpResult();
+		String wxUser = JSON.toJSONString(weiXinUser);
+		httpResult = HttpUtils.doPostJson("https://qyapi.weixin.qq.com/cgi-bin/user/update?access_token="+accessToken,wxUser);
+		return httpResult;
+	}
+	/**
+	 * 删除成员
+	 * @param accessToken 调用接口凭证
+	 * @param userId 微信userid
+	 * @return HttpResult
+	 */
+	public static HttpResult delUser(String accessToken, String userId){
+		HttpResult httpResult = new HttpResult();
+		Map<String, String> map = new HashMap<>();
+		map.put("access_token",accessToken);
+		map.put("userid",userId);
+		httpResult = HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/user/delete",map);
+		return httpResult;
+	}
+	/**
+	 * 新增成员
+	 * @param accessToken 调用接口凭证
+	 * @param weiXinUser 微信用户信息
+	 * @return HttpResult
+	 */
+	public static HttpResult addUser(String accessToken, WeiXinUser weiXinUser){
+		HttpResult httpResult = new HttpResult();
+		String wxUser = JSON.toJSONString(weiXinUser);
+		httpResult = HttpUtils.doPostJson("https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token="+accessToken,wxUser);
+		return httpResult;
+	}
+
 }

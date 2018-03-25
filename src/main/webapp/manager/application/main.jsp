@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/jsp/context.jsp" %>
+<%@include file="/common/jsp/authUser.jsp" %>
 <html lang="zh-CN">
 <head>
 	<meta charset="utf-8">
@@ -42,7 +43,7 @@
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
 	function loadAppPage(appSrc){
-		$("#appFrame").attr("src",${baseURL}+"appSrc");
+		$("#appFrame").attr("src","${baseURL}/"+appSrc);
 	}
 </script>
 </body>

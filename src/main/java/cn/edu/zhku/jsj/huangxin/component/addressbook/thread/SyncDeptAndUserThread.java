@@ -110,6 +110,7 @@ public class SyncDeptAndUserThread extends Thread {
 											userInfo.setUserName(weiXinUser.getName());
 											userInfo.setEnglishName(weiXinUser.getEnglish_name());
 											userInfo.setDeptId(tbDepartmentInfoPO.getId());
+											userInfo.setDeptName(tbDepartmentInfoPO.getDepartmentName());
 											userInfo.setShowOrder(weiXinUser.getOrder());
 											userInfo.setPosition(weiXinUser.getPosition());
 											userInfo.setMobile(weiXinUser.getMobile());
@@ -129,6 +130,7 @@ public class SyncDeptAndUserThread extends Thread {
 											userInfo.setUserName(weiXinUser.getName());
 											userInfo.setEnglishName(weiXinUser.getEnglish_name());
 											userInfo.setDeptId(tbDepartmentInfoPO.getId());
+											userInfo.setDeptName(tbDepartmentInfoPO.getDepartmentName());
 											userInfo.setShowOrder(weiXinUser.getOrder());
 											userInfo.setPosition(weiXinUser.getPosition());
 											userInfo.setMobile(weiXinUser.getMobile());

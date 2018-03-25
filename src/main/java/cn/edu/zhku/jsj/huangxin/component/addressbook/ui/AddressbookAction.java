@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,101 @@ public class AddressbookAction {
 			}
 			addressbookService.getUserList(searchMap, page);
 			resultVO.setData(page);
+		}
+		return resultVO;
+	}
+	@ResponseBody
+	@RequestMapping("/getUserDetailById.action")
+	public ResultVO getUserDetailById(@RequestParam("userId")String userId) {
+		ResultVO<TbUserInfoPO> resultVO = new ResultVO("查询成功");
+		if(AssertUtils.isEmpty(userId)){
+			resultVO.setCode("999");
+			resultVO.setDescribe("非法参数");
+		}else{
+			TbUserInfoPO userInfo = addressbookService.searchPOByPk(TbUserInfoPO.class,userId);
+			if(AssertUtils.isEmpty(userInfo)){
+				resultVO.setCode("1099");
+				resultVO.setDescribe("用户已被删除");
+			}else{
+				resultVO.setData(userInfo);
+			}
+		}
+		return resultVO;
+	}
+	@ResponseBody
+	@RequestMapping("/updateUserInfo.action")
+	public ResultVO updateUserInfo(TbUserInfoPO tbUserInfoPO) {
+		ResultVO<TbUserInfoPO> resultVO = new ResultVO("更新成功");
+		if(AssertUtils.isEmpty(tbUserInfoPO) || AssertUtils.isEmpty(tbUserInfoPO.getId())){
+			resultVO.setCode("999");
+			resultVO.setDescribe("非法参数");
+		}else{
+			TbUserInfoPO userInfo = addressbookService.searchPOByPk(TbUserInfoPO.class,tbUserInfoPO.getId());
+			if(AssertUtils.isEmpty(userInfo)){
+				resultVO.setCode("1099");
+				resultVO.setDescribe("用户已被删除");
+			}else{
+				userInfo.setUserName(tbUserInfoPO.getUserName());
+				userInfo.setSex(tbUserInfoPO.getSex());
+				userInfo.setEmail(tbUserInfoPO.getEmail());
+				userInfo.setDeptId(tbUserInfoPO.getDeptId());
+				userInfo.setDeptName(tbUserInfoPO.getDeptName());
+				userInfo.setPosition(tbUserInfoPO.getPosition());
+				userInfo.setTelephone(tbUserInfoPO.getTelephone());
+				String rs = addressbookService.updateUser(userInfo);
+				if(rs != null){
+					resultVO.setCode("1099");
+					resultVO.setDescribe(rs);
+				}
+			}
+		}
+		return resultVO;
+	}
+	@ResponseBody
+	@RequestMapping("/delUserById.action")
+	public ResultVO delUserById(String userId) {
+		ResultVO<TbUserInfoPO> resultVO = new ResultVO("删除成功");
+		if(AssertUtils.isEmpty(userId)){
+			resultVO.setCode("999");
+			resultVO.setDescribe("非法参数");
+		}else{
+			String rs = addressbookService.delUserById(userId);
+			if(rs != null){
+				resultVO.setCode("1099");
+				resultVO.setDescribe(rs);
+			}
+		}
+		return resultVO;
+	}
+	@ResponseBody
+	@RequestMapping("/addUser.action")
+	public ResultVO addUser(TbUserInfoPO tbUserInfoPO, HttpSession session) {
+		ResultVO<TbUserInfoPO> resultVO = new ResultVO("添加成功");
+		TbAdminUserPO adminUser = (TbAdminUserPO) session.getAttribute("adminUser");
+		if(AssertUtils.isEmpty(adminUser)){
+			resultVO.setCode("999");
+			resultVO.setDescribe("请进行先登录！");
+		}else {
+			if (AssertUtils.isEmpty(tbUserInfoPO)) {
+				resultVO.setCode("999");
+				resultVO.setDescribe("非法参数");
+			} else {
+				Map<String, Object> searchMap = new HashMap<>();
+				searchMap.put("mobile", tbUserInfoPO.getMobile());
+				TbUserInfoPO userInfoPO = addressbookService.getUserInfo(searchMap);
+				if (!AssertUtils.isEmpty(userInfoPO)) {
+					resultVO.setCode("1099");
+					resultVO.setDescribe("添加成员失败，成员手机号已经存在");
+				} else {
+					tbUserInfoPO.setCreator(adminUser.getUserName());
+					tbUserInfoPO.setCreateTime(new Date());
+					String rs = addressbookService.addUser(tbUserInfoPO);
+					if (!AssertUtils.isEmpty(rs)) {
+						resultVO.setCode("1099");
+						resultVO.setDescribe(rs);
+					}
+				}
+			}
 		}
 		return resultVO;
 	}

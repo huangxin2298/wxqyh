@@ -4,6 +4,8 @@ import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinDeptResult;
 import cn.edu.zhku.jsj.huangxin.component.base.util.MD5Util;
 import com.alibaba.fastjson.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import javax.json.JsonObject;
 import java.io.UnsupportedEncodingException;
 
 public class Test {
@@ -18,6 +20,7 @@ public class Test {
         System.out.println(access_token);*/
         /*System.out.println(MD5Util.MD5("test"));//098F6BCD4621D373CADE4E832627B4F6*/
         WeiXinDeptResult weiXinDeptResult = JSONObject.parseObject("{\"errcode\":0,\"errmsg\":\"ok\",\"department\":[{\"id\":2,\"name\":\"广州研发中心\",\"parentid\":1,\"order\":10},{\"id\":3,\"name\":\"邮箱产品部\",\"parentid\":2,\"order\":40}]}", WeiXinDeptResult.class);
-        System.out.println(weiXinDeptResult);
+        /*System.out.println(weiXinDeptResult);*/
+        System.out.println(JSON.toJSONString(weiXinDeptResult));
     }
 }
