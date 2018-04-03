@@ -93,7 +93,9 @@ public class BaseService implements IBaseService{
                 basePO = clazz.newInstance();
                 paramMap.put(basePO._getPKName(),pkValue);
                 Map<String, Object> fieldMap = baseDao.searchPOByPk(basePO._getTableName(),paramMap);
-                basePO = BaseUtils.mapToPO(fieldMap,clazz);
+                if(!AssertUtils.isEmpty(fieldMap)){
+                    basePO = BaseUtils.mapToPO(fieldMap,clazz);
+                }
                 System.out.println(fieldMap);
             } catch (InstantiationException e) {
                 e.printStackTrace();

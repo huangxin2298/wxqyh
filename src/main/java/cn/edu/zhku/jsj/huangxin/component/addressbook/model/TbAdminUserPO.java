@@ -8,6 +8,7 @@ public class TbAdminUserPO implements IBasePO{
 
 	private String id;
 	private String userName;
+	private String account;
 	private String password;
 	private Date createTime;
 	private Date lastLoginTime;
@@ -27,6 +28,14 @@ public class TbAdminUserPO implements IBasePO{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getPassword() {

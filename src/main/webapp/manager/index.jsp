@@ -39,9 +39,9 @@
 					<li><a href="javascript:changePage(0)">我的应用</a></li>
 					<li><a href="javascript:changePage(1)">通讯录</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<%--<ul class="nav navbar-nav navbar-right">
 					<li><a href="javascript:changePage(2)">设置</a></li>
-				</ul>
+				</ul>--%>
 				<span style="float: right;margin-top: 15px">${adminUser.userName}<a href="javascript:loginOutAdminUser()" style="margin-left: 6px">退出</a></span>
 			</div>
 		</div>

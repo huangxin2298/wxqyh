@@ -2,22 +2,28 @@ body {
     padding: 0px;
     margin: 0px;
 }
-.mt10{
+
+.mt10 {
     margin-top: 10px;
 }
-.ml10{
+
+.ml10 {
     margin-left: 10px;
 }
-.mb10{
+
+.mb10 {
     margin-bottom: 10px;
 }
-.mr10{
+
+.mr10 {
     margin-right: 10px;
 }
-.fl{
+
+.fl {
     float: left;
 }
-.fr{
+
+.fr {
     float: right;
 }
 
@@ -33,20 +39,24 @@ body {
     border: 1px solid #cccccc;
     cursor: pointer;
 }
+
 .orangeBtn {
     background: #ff9600;
     color: #fff;
     border: 1px solid #e2750a;
 }
+
 .orangeBtn:hover {
     background: #ff4e00;
     color: #fff;
     border: 1px solid #cf4306;
 }
+
 .smallBtn {
-    line-height: 20px!important;
-    padding: 5px 15px!important;
+    line-height: 20px !important;
+    padding: 5px 15px !important;
 }
+
 .searchBox {
     width: 210px;
     height: 30px;
@@ -56,6 +66,7 @@ body {
     background: #fff;
     position: relative;
 }
+
 .inputSearchBox {
     width: 165px;
     border: 0px solid #ffffff;
@@ -65,6 +76,7 @@ body {
     font-family: inherit;
     vertical-align: top;
 }
+
 .senior_search_btn {
     cursor: pointer;
     float: right;
@@ -76,6 +88,7 @@ body {
     text-align: center;
     width: 30px;
 }
+
 .submitSearchBtn {
     background: url(../images/search_icon.png) no-repeat center center;
     width: 32px;
@@ -86,6 +99,7 @@ body {
     right: 0;
     border-left: 1px solid #ccc;
 }
+
 table {
     max-width: 100%;
     background-color: transparent;
@@ -93,24 +107,30 @@ table {
     border-spacing: 0px;
     font-size: 14px;
 }
+
 .table {
     margin-bottom: 0;
 }
+
 .table-line {
     border: none;
 }
+
 .table thead {
     background: #f8f8f8;
     font-weight: bold;
 }
+
 .borderline {
     border-right: 1px dashed #cfcfcf;
     margin-right: 8px;
     margin-left: 5px;
 }
+
 .lasttd {
     position: relative;
 }
+
 .lasttdpop {
     background: none repeat scroll 0 0 black;
     border-radius: 4px;
@@ -123,6 +143,7 @@ table {
     text-align: center;
     top: 10px;
 }
+
 .lasttdpop a {
     color: white;
     text-decoration: none;
@@ -131,6 +152,7 @@ table {
     display: inline-block;
     padding: 0 5px;
 }
+
 .contact_action {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -139,21 +161,26 @@ table {
     display: inline-block;
     padding: 3px 10px;
 }
+
 .navbar {
     margin-bottom: 20px;
 }
+
 bottomPage {
     border-top: 1px solid #dbdbdd;
     padding-top: 30px;
     padding-bottom: 5px;
 }
+
 .pager-nav {
     margin: 0 0 21px;
     text-align: center;
 }
+
 .pager-nav ul {
     display: inline-block;
 }
+
 .pager-nav li {
     margin: 0 5px;
     float: left;
@@ -162,6 +189,7 @@ bottomPage {
     border: 1px solid #ddd;
     background-color: #f6f7f7;
 }
+
 .pager-nav li:hover {
     margin: 0 5px;
     float: left;
@@ -170,14 +198,17 @@ bottomPage {
     border: 1px solid #e2750a;
     background-color: #ff9600;
 }
+
 .pager-nav a {
     color: #B3B3B3;
-    text-decoration:none
+    text-decoration: none
 }
+
 .pager-nav a:hover {
     color: #fff;
-    text-decoration:none
+    text-decoration: none
 }
+
 .cTitle {
     background-color: #f8f8f8;
     border-bottom: 1px solid #dbdbdd;
@@ -187,14 +218,17 @@ bottomPage {
     padding-left: 20px;
     font-size: 16px;
 }
+
 .cMain {
     margin-top: 20px;
     position: relative;
 }
+
 .form .form-item {
     margin-bottom: 9px;
     clear: both;
 }
+
 .new_form .form-item .title {
     float: left;
     width: 140px;
@@ -202,43 +236,194 @@ bottomPage {
     line-height: 32px;
     font-size: 14px;
 }
+
 .new_form .form-field {
     margin-left: 150px;
     font-size: 14px;
 }
+
 .input-text {
     padding: 6px 4px;
     margin: 0;
 }
+
 .form-text {
     margin-top: 0;
     margin-bottom: 0;
     width: 290px;
 }
+
 .form select {
     border: 1px solid #cccccc;
     width: 290px;
     border-radius: 4px;
     padding: 4px;
 }
+
 .form .form-field-rc, .form input, .form textarea, .form select, .form .form-text {
     margin-bottom: 9px;
 }
+
 .form .form-text, .form textarea {
     border: 1px solid #cccccc;
     border-radius: 4px;
     transition: border linear 0.2s, box-shadow linear 0.2s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .form .form-action {
     clear: both;
     text-align: center;
 }
+
 .tcform_action {
     border-top: 1px solid #eee;
     margin-top: 20px;
     padding-top: 20px;
 }
-.mustInput{
-    color:red;
+
+.mustInput {
+    color: red;
+}
+
+.switch {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.switch .off {
+    background: url(../images/switch_off.png) no-repeat scroll right center;
+    cursor: pointer;
+    height: 30px;
+    width: 50px;
+}
+
+.switch .on {
+    background: url(../images/switch_on.png) no-repeat scroll right center;
+    cursor: pointer;
+    height: 30px;
+    width: 50px;
+}
+
+.tabs-primary {
+    margin: 10px 0 10px 0;
+    line-height: 34px;
+    height: 36px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.tabs-primary a.active {
+    border-bottom-color: white;
+    background-color: white;
+    color: #0078e7;
+}
+
+.tabs-primary a {
+    float: left;
+    display: inline;
+    padding: 0 15px;
+    border: 1px solid #cccccc;
+    margin-bottom: -1px;
+    margin-left: 10px;
+    border-radius: 4px 4px 0 0;
+    text-decoration: none;
+}
+
+.pop_wrap6 {
+    background: #f7f7f7;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+    height: auto;
+    left: 50%;
+    top: 0px;
+    margin-left: -300px;
+    overflow: auto;
+    position: absolute;
+    width: 600px;
+    z-index: 1300;
+    border-radius: 2px;
+}
+
+.pop_wrap6_main {
+    width: 100%;
+}
+
+.SS_tit {
+    background: #ececec;
+    color: #333;
+    font-size: 18px;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 20px;
+    position: relative;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.SS_tit i {
+    cursor: pointer;
+    font-style: normal;
+    position: absolute;
+    right: 0;
+    width: 50px;
+    text-align: center;
+    color: #bbb;
+    font-size: 28px;
+}
+
+.SS_main_top {
+    padding: 20px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.SS_main_top .selected {
+    background: #fff;
+    border: 1px solid #cccccc;
+    padding: 0px;
+    max-height: 110px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.SS_main_top .selected .P_search {
+    border: none;
+    padding: 0 5px;
+    line-height: 20px;
+    vertical-align: middle;
+    margin: 0;
+    box-shadow: 0 0 0;
+}
+
+.SS_main_top .content {
+    height: 260px;
+    border-bottom: 1px solid #e4e4e4;
+    border-top: 1px solid #e4e4e4;
+    margin: 10px 0 6px 0;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.SS_btn {
+    margin-top: 0;
+    text-align: center;
+    background: #ececec;
+    padding: 10px;
+}
+
+.SS_tit {
+    background: #ececec;
+    color: #333;
+    font-size: 18px;
+    height: 45px;
+    line-height: 45px;
+    padding-left: 20px;
+    position: relative;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
 }

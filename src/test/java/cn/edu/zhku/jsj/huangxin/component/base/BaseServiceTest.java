@@ -1,6 +1,7 @@
 package cn.edu.zhku.jsj.huangxin.component.base;
 import cn.edu.zhku.jsj.huangxin.component.base.model.UserPO;
 import cn.edu.zhku.jsj.huangxin.component.base.service.IUserService;
+import cn.edu.zhku.jsj.huangxin.component.base.util.ConfigUtil;
 import cn.edu.zhku.jsj.huangxin.component.base.util.HttpUtils;
 import cn.edu.zhku.jsj.huangxin.component.base.util.RedisUtils;
 import cn.edu.zhku.jsj.huangxin.component.base.util.WeiXinUtils;
@@ -98,5 +99,12 @@ public class BaseServiceTest{
     public void weiXinUtilTest(){
         String accessCode = WeiXinUtils.getAccessToken("org","1");
         System.out.println("------------\n"+accessCode);
+    }
+
+    @Test
+    public void configUtilTest(){
+        System.out.println(ConfigUtil.getConfigValue("web_port"));
+        System.out.println("-----------------------------------------------");
+        System.out.println(ConfigUtil.getConfigValue("web_port"));
     }
 }

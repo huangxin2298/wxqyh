@@ -1,7 +1,7 @@
 .ztree * {font-size: 10pt;font-family:"Microsoft Yahei",Verdana,Simsun,"Segoe UI Web Light","Segoe UI Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","Helvetica Neue",Arial}
 .ztree li ul{ margin:0; padding:0}
 .ztree li {line-height:30px;}
-.ztree li a {width:200px;height:30px;padding-top: 0px;}
+.ztree li a {height:30px;padding-top: 0px}
 .ztree li a:hover {text-decoration:none; background-color: #E7E7E7;}
 .ztree li a span.button.switch {visibility:hidden}
 .ztree.showIcon li a span.button.switch {visibility:visible}

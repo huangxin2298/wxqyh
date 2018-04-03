@@ -57,6 +57,8 @@ public class SyncDeptAndUserThread extends Thread {
 									continue;
 								}
 								deptFullName = parentDept.getDeptFullName() + "-->" + deptFullName;
+							}else{
+								parentDept = new TbDepartmentInfoPO();
 							}
 
 							if(!AssertUtils.isEmpty(tbDepartmentInfoPO)){
@@ -64,6 +66,7 @@ public class SyncDeptAndUserThread extends Thread {
 								tbDepartmentInfoPO.setDepartmentName(weiXinDept.getName());
 								if(!"0".equals(weiXinDept.getParentid())) {
 									tbDepartmentInfoPO.setParentDepart(parentDept.getId());
+									tbDepartmentInfoPO.setParentDeptName(parentDept.getDepartmentName());
 								}else{
 									tbDepartmentInfoPO.setParentDepart("0");
 								}

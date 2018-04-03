@@ -45,7 +45,7 @@
 <div class="contactTable mt10" id="cc94a9ec68ff4d93a7fd5934c581b647">
     <table class="table table-line table-hover">
         <thead>
-        <tr templateId="default" dqdpCheckPoint="list_title">
+        <tr>
             <th width='20'><input type="checkbox" class="form-checkbox" onclick=""></th>
             <th width='200'>姓名</th>
             <th width='100'>性别</th>

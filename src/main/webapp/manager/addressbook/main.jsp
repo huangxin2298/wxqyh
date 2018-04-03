@@ -38,15 +38,20 @@
 <script src="${baseURL}/common/js/jquery.min.js"></script>
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript" src="${baseURL}/manager/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${baseURL}/manager/zTree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="${baseURL}/manager/zTree/js/jquery.ztree.exedit.js"></script>
+<script type="text/javascript" src="${baseURL}/manager/zTree/js/jquery.ztree.exhide.js"></script>
 <script>
-    var curMenu = null, zTree_Menu = null;
+    var zNodes,curMenu = null, zTree_Menu = null,IDMark_A = "_a",timer;
     var setting = {
         view: {
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            addDiyDom: addDiyDom,
             showLine: false,
             showIcon: false,
             selectedMulti: false,
             dblClickExpand: false,
-            addDiyDom: addDiyDom
         },
         data: {
             simpleData: {
@@ -54,25 +59,41 @@
             }
         },
         callback: {
-            beforeClick: beforeClick
+            beforeClick : beforeClick,
+            onClick : zTreeOnClick,
         }
     };
 
-    var zNodes/*=[
-        { id:1, pId:0, name:"文件夹", open:true},
-        { id:11, pId:1, name:"收件箱"},
-        { id:111, pId:11, name:"收件箱1"},
-        { id:112, pId:111, name:"收件箱2"},
-        { id:113, pId:112, name:"收件箱3"},
-        { id:114, pId:113, name:"收件箱4"},
-        { id:12, pId:1, name:"垃圾邮件"},
-        { id:13, pId:1, name:"草稿"},
-        { id:14, pId:1, name:"已发送邮件"},
-        { id:15, pId:1, name:"已删除邮件"},
-        { id:3, pId:0, name:"快速视图"},
-        { id:31, pId:3, name:"文档"},
-        { id:32, pId:3, name:"照片"}
-    ];*/
+    function addHoverDom(treeId, treeNode) {
+        $(".diyBtn").unbind().remove();
+        var obj = $("#" + treeNode.tId+IDMark_A);
+        if ($("#diyBtn1_"+treeNode.id).length>0) return;
+        if ($("#diyBtn2_"+treeNode.id).length>0) return;
+        var editStr = "";
+        if(treeNode.tId == "ztree_1"){
+            editStr = "<span class=\"diyBtn\" style='margin:0 0 0 5px' onmouseover='keepDivBtn()'><a id='diyBtn1_" +treeNode.id+ "' onclick='addDept(\""+treeNode.id+"\")' style='margin:0'>新增</a></span>";
+        }else{
+            editStr = "<span class=\"diyBtn\"  style='margin:0 0 0 5px;' onmouseover='keepDivBtn()'><a id='diyBtn1_" +treeNode.id+ "' onclick='addDept(\""+treeNode.id+"\")' style='margin:0'>新增</a>" +
+                "<a id='diyBtn2_" +treeNode.id+ "' onclick='editDept(\""+treeNode.id+"\")' style='margin:0'>编辑</a>" +
+                "<a id='diyBtn3_" +treeNode.id+ "' onclick='delDept(\""+treeNode.id+"\")' style='margin:0'>删除</a></span>";
+        }
+        obj.after(editStr);
+    }
+    function removeHoverDom(treeId, treeNode) {
+        timer = setTimeout(function(){
+            $(".diyBtn").unbind().remove();
+            /*$("#diyBtn1_"+treeNode.id).unbind().remove();
+            $("#diyBtn2_"+treeNode.id).unbind().remove();
+            $("#diyBtn3_"+treeNode.id).unbind().remove();*/
+        },1000);
+    }
+    function keepDivBtn(){
+        clearInterval(timer);
+    }
+    function hideDivBtn(){
+        $(".diyBtn").unbind().remove();
+    }
+
 
     function addDiyDom(treeId, treeNode) {
         var spaceWidth = 5;
@@ -91,15 +112,18 @@
         if (treeNode.level == 0 ) {
             var zTree = $.fn.zTree.getZTreeObj("ztree");
             zTree.expandNode(treeNode);
-            return false;
+            return true;
         }
         return true;
+    }
+
+    function zTreeOnClick(event, treeId, treeNode) {
+        loadDeptUser(treeNode.id)
     }
 
     $(document).ready(function(){
         getDeptList();
         window.setTimeout(function(){
-            console.log(zNodes)
             var treeObj = $("#ztree");
             $.fn.zTree.init(treeObj, setting, zNodes);
             zTree_Menu = $.fn.zTree.getZTreeObj("ztree");
@@ -113,6 +137,7 @@
             }, function() {
                 treeObj.removeClass("showIcon");
             });
+            hideDivBtn();
         },500);
     });
     function getDeptList(){
@@ -127,7 +152,7 @@
                     if(typeof (deptList)!="undefined" && deptList != null && deptList.length>0){
                         var znodeStr = "[";
                         for(var i=0;i<deptList.length;i++){
-                            znodeStr += "{ \"id\":\""+deptList[i].id+"\",\"pId\":\""+deptList[i].parentDepart+"\",\"name\":\""+deptList[i].departmentName+"\",\"open\":true,\"click\":\"loadDeptUser('"+deptList[i].id+"');\"},";
+                            znodeStr += "{ \"id\":\""+deptList[i].id+"\",\"pId\":\""+deptList[i].parentDepart+"\",\"name\":\""+deptList[i].departmentName+"\",\"open\":true},";
                         }
                         znodeStr = znodeStr.substring(0,znodeStr.length-1);
                         znodeStr += "]";
@@ -145,6 +170,37 @@
     }
     function loadDeptUser(deptId){
         $("#depFrame").attr("src","${baseURL}/manager/addressbook/detail.jsp?deptId="+deptId);
+    }
+    function addDept(deptId){
+        hideDivBtn()
+        $("#depFrame").attr("src","${baseURL}/manager/addressbook/dept/deptAdd.jsp?deptId="+deptId);
+    }
+    function editDept(deptId){
+        hideDivBtn()
+        $("#depFrame").attr("src","${baseURL}/manager/addressbook/dept/deptEdit.jsp?deptId="+deptId);
+    }
+    function delDept(deptId){
+        hideDivBtn();
+        if(confirm("您确定要删除该部门?")){
+            $.ajax({
+                url: "${baseURL}/manager/addressbook/delDepartmentById.action",
+                type: "get",
+                data: {"deptId":deptId},
+                async: false,
+                dataType: "json",
+                success: function(result) {
+                    if(result.code == "0"){
+                        alert(result.describe);
+                        parent.location.reload();
+                    } else {
+                        alert(result.describe);
+                    }
+                },
+                error: function() {
+                    alert("系统繁忙，请稍后重试");
+                }
+            })
+        }
     }
 </script>
 </body>

@@ -26,25 +26,57 @@
 </head>
 
 <body style="padding:0px;margin: 0px">
-<nav class="navbar navbar-default" style="float:left;width:18%">
-	<ul class="nav nav-tabs nav-stacked">
-		<li><a href="#">Tutorials</a></li>
-		<li><a href="#">Practice Editor </a></li>
-		<li><a href="#">Gallery</a></li>
-		<li><a href="#">Contact</a></li>
-		<li><a href="#">Gallery</a></li>
-		<li><a href="#">Contact</a></li>
+<nav class="navbar navbar-default" style="float:left;width:18%;min-height: 42px">
+	<ul class="nav nav-tabs nav-stacked" id="menuList">
+
 	</ul>
 </nav>
-<iframe  name="appFrame" id="appFrame" src="" width="81%" height="560px" frameborder="0"
+<iframe  name="menuFrame" id="menuFrame" src="" width="81%" height="638px" frameborder="0"
 		 style="margin-left:1%;float:left;overflow-x:hidden;overflow-y:auto;" >
 </iframe>
 <script src="${baseURL}/common/js/jquery.min.js"></script>
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
-	function loadAppPage(appSrc){
-		$("#appFrame").attr("src","${baseURL}/"+appSrc);
+	var menuItemHtml = "<li><a href=\"javascript:loadMenuPage('@menuUrl')\">@menuName</a></li>"
+
+    $(document).ready(function () {
+        loadMenuList();
+    });
+	function loadMenuList(){
+        $.ajax({
+            url: "${baseURL}/manager/application/getMenuList.action",
+            type: "POST",
+            dataType: "json",
+            success: function(result) {
+                if(result.code == "0"){
+                    var menuList = result.data;
+                    if(typeof (menuList)!="undefined" && menuList!=null && menuList.length>0){
+                        var menuListHtml = "";
+                        for(var i=0;i<menuList.length;i++){
+                            var menuHtml = menuItemHtml;
+                            menuHtml = menuHtml.replace("@menuUrl",menuList[i].menuUrl);
+                            menuHtml = menuHtml.replace("@menuName",menuList[i].menuName);
+                            menuListHtml +=menuHtml;
+                            if(i==0){
+                                $("#menuFrame").attr("src","${baseURL}/"+menuList[i].menuUrl);
+                            }
+                        }
+                        $("#menuList").html(menuListHtml);
+                    }else{
+                        $("#menuList").html("暂无应用，请到系统管理后台添加");
+                    }
+                } else {
+                    alert(result.describe);
+                }
+            },
+            error: function() {
+                alert("系统繁忙，请稍后重试");
+            }
+        })
 	}
+    function loadMenuPage(menuSrc){
+        $("#menuFrame").attr("src","${baseURL}/"+menuSrc);
+    }
 </script>
 </body>
 </html>

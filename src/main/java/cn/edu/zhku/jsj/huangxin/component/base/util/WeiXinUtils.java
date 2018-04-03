@@ -5,6 +5,7 @@ import cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO;
 import cn.edu.zhku.jsj.huangxin.component.addressbook.model.OrgPO;
 import cn.edu.zhku.jsj.huangxin.component.addressbook.service.IAddressbookService;
 import cn.edu.zhku.jsj.huangxin.component.base.model.HttpResult;
+import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinDept;
 import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinUser;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -162,4 +163,52 @@ public class WeiXinUtils {
 		return httpResult;
 	}
 
+	/**
+	 * 更新部门
+	 * @param accessToken 调用接口凭证
+	 * @param weiXinDept 微信部门信息
+	 * @return HttpResult
+	 */
+	public static HttpResult updateDept(String accessToken, WeiXinDept weiXinDept) {
+		HttpResult httpResult = new HttpResult();
+		String wxDept = JSON.toJSONString(weiXinDept);
+		httpResult = HttpUtils.doPostJson("https://qyapi.weixin.qq.com/cgi-bin/department/update?access_token="+accessToken,wxDept);
+		return httpResult;
+	}
+
+	/**
+	 * 删除部门
+	 * @param accessToken 调用接口凭证
+	 * @param deptId 微信部门id
+	 * @return HttpResult
+	 */
+	public static HttpResult delDept(String accessToken, String deptId){
+		HttpResult httpResult = new HttpResult();
+		Map<String, String> map = new HashMap<>();
+		map.put("access_token",accessToken);
+		map.put("id",deptId);
+		httpResult = HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/department/delete",map);
+		return httpResult;
+	}
+	/**
+	 * 新增部门
+	 * @param accessToken 调用接口凭证
+	 * @param weiXinDept 微信部门信息
+	 * @return HttpResult
+	 */
+	public static HttpResult addDept(String accessToken, WeiXinDept weiXinDept){
+		HttpResult httpResult = new HttpResult();
+		String wxDept = JSON.toJSONString(weiXinDept);
+		httpResult = HttpUtils.doPostJson("https://qyapi.weixin.qq.com/cgi-bin/department/create?access_token="+accessToken,wxDept);
+		return httpResult;
+	}
+
+	public static HttpResult getUserinfo(String accessToken, String code) {
+		HttpResult httpResult = new HttpResult();
+		Map<String, String> map = new HashMap<>();
+		map.put("access_token",accessToken);
+		map.put("code",code);
+		httpResult = HttpUtils.doGet("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token="+accessToken,map);
+		return httpResult;
+	}
 }

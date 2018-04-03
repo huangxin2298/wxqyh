@@ -9,6 +9,7 @@ public class TbDepartmentInfoPO implements IBasePO {
 	private String id;
 	private String departmentName;
 	private String parentDepart;
+	private String parentDeptName;
 	private String creator;
 	private Date createTime;
 	private Date updateTime;
@@ -40,6 +41,14 @@ public class TbDepartmentInfoPO implements IBasePO {
 
 	public void setParentDepart(String parentDepart) {
 		this.parentDepart = parentDepart;
+	}
+
+	public String getParentDeptName() {
+		return parentDeptName;
+	}
+
+	public void setParentDeptName(String parentDeptName) {
+		this.parentDeptName = parentDeptName;
 	}
 
 	public String getCreator() {

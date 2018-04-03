@@ -80,4 +80,33 @@ public interface IAddressbookService extends IBaseService {
 	 * @return
 	 */
 	String addUser(TbUserInfoPO tbUserInfoPO);
+
+	/**
+	 * 更新部门
+	 * @param tbDepartmentInfoPO 部门信息
+	 * @return 更新结果
+	 */
+	String updateDepatment(TbDepartmentInfoPO tbDepartmentInfoPO);
+
+	/**
+	 * 删除部门
+	 * @param deptId
+	 * @return
+	 */
+	String delDepartmentById(String deptId);
+
+	/**
+	 * 新增部门
+	 * @param tbDepartmentInfoPO 部门信息
+	 * @return 新增结果
+	 */
+	String addDepartment(TbDepartmentInfoPO tbDepartmentInfoPO);
+
+	/**
+	 * 获取子部门id
+	 * @param searchMap
+	 * @return
+	 */
+	List<String> getChildDeptId(Map<String, Object> searchMap);
+
 }

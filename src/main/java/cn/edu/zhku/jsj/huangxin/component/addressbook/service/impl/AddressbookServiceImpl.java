@@ -6,6 +6,7 @@ import cn.edu.zhku.jsj.huangxin.component.addressbook.service.IAddressbookServic
 import cn.edu.zhku.jsj.huangxin.component.addressbook.util.AddressbookUtil;
 import cn.edu.zhku.jsj.huangxin.component.base.model.HttpResult;
 import cn.edu.zhku.jsj.huangxin.component.base.model.Page;
+import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinDept;
 import cn.edu.zhku.jsj.huangxin.component.base.model.WeiXinUser;
 import cn.edu.zhku.jsj.huangxin.component.base.service.impl.BaseService;
 import cn.edu.zhku.jsj.huangxin.component.base.util.AssertUtils;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.json.JsonObject;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service("addressbookService")
 public class AddressbookServiceImpl extends BaseService implements IAddressbookService {
@@ -170,10 +168,136 @@ public class AddressbookServiceImpl extends BaseService implements IAddressbookS
 				if(!"0".equals(jsonObject.getString("errcode"))){
 					result = "新增微信用户失败！错误码为：" + jsonObject.getString("errcode");
 				}else{
-					updatePO(tbUserInfoPO);
+					tbUserInfoPO.setId(userId);
+					tbUserInfoPO.setUserId(userId);
+					insertPO(tbUserInfoPO);
 				}
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String updateDepatment(TbDepartmentInfoPO tbDepartmentInfoPO) {
+		String result = null;
+		TbDepartmentInfoPO departmentInfo = searchPOByPk(TbDepartmentInfoPO.class, tbDepartmentInfoPO.getId());
+		if (AssertUtils.isEmpty(departmentInfo)) {
+			result = "部门已被删除，请刷新重试！";
+		} else {
+			TbDepartmentInfoPO parentDepart = searchPOByPk(TbDepartmentInfoPO.class,tbDepartmentInfoPO.getParentDepart());
+			if(AssertUtils.isEmpty(parentDepart)){
+				result= "更新失败，父部门不存在，请刷新重试！";
+			}else{
+				tbDepartmentInfoPO.setWxId(departmentInfo.getWxId());
+				tbDepartmentInfoPO.setUpdateTime(new Date());
+				tbDepartmentInfoPO.setWxParentid(parentDepart.getWxId());
+				tbDepartmentInfoPO.setParentDeptName(parentDepart.getDepartmentName());
+				tbDepartmentInfoPO.setDeptFullName(parentDepart.getDeptFullName()+"-->"+tbDepartmentInfoPO.getDepartmentName());
+
+				WeiXinDept weiXinDept = new WeiXinDept();
+				weiXinDept.setId(tbDepartmentInfoPO.getWxId());
+				weiXinDept.setName(tbDepartmentInfoPO.getDepartmentName());
+				weiXinDept.setOrder(tbDepartmentInfoPO.getShowOrder());
+				weiXinDept.setParentid(parentDepart.getWxId());
+
+				HttpResult httpResult = WeiXinUtils.updateDept(WeiXinUtils.getAccessToken("org", AddressbookUtil.getAdminOrgId()),weiXinDept);
+				logger.error(httpResult.toString());
+				JSONObject jsonObject = JSONObject.parseObject(httpResult.getContent());
+				if(httpResult.getCode()!=200){
+					result = "更新微信部门失败！";
+				}else{
+					if(!"0".equals(jsonObject.getString("errcode"))){
+						result = "更新微信部门失败！错误码为：" + jsonObject.getString("errcode");
+					}else{
+						updatePO(tbDepartmentInfoPO);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public String delDepartmentById(String deptId) {
+		String result = null;
+		TbDepartmentInfoPO tbDepartmentInfoPO = searchPOByPk(TbDepartmentInfoPO.class, deptId);
+		if(AssertUtils.isEmpty(tbDepartmentInfoPO)){
+			result = "删除失败，部门不存在！";
+		}else{
+			Map<String, Object> searchMap = new HashMap<>();
+			searchMap.put("parent_depart", deptId);
+			List<TbDepartmentInfoPO> departmentList = addressbookDAO.getDepartmentList(searchMap);
+			if(!AssertUtils.isEmpty(departmentList)){
+				result = "删除失败，不能删除含有子部门的部门！";
+			}else{
+				searchMap.clear();
+				searchMap.put("dept_id", deptId);
+				List<TbUserInfoPO> userList = addressbookDAO.getUserList(searchMap);
+				if(!AssertUtils.isEmpty(userList)){
+					result = "删除失败，不能删除含有成员的部门！";
+				}else{
+					HttpResult httpResult = WeiXinUtils.delDept(WeiXinUtils.getAccessToken("org", AddressbookUtil.getAdminOrgId()),tbDepartmentInfoPO.getWxId());
+					logger.error(httpResult.toString());
+					JSONObject jsonObject = JSONObject.parseObject(httpResult.getContent());
+					if(httpResult.getCode() != 200){
+						result = "删除微信部门失败！";
+					}else{
+						if(!"0".equals(jsonObject.getString("errcode"))){
+							result = "删除微信部门失败！错误码为："+jsonObject.getString("errcode");
+						}else{
+							deletePO(TbDepartmentInfoPO.class,deptId);
+						}
+					}
+
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public String addDepartment(TbDepartmentInfoPO tbDepartmentInfoPO) {
+		String result = null;
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("department_name", tbDepartmentInfoPO.getDepartmentName());
+		searchMap.put("parent_depart", tbDepartmentInfoPO.getParentDepart());
+		List<TbDepartmentInfoPO> departmentInfo = addressbookDAO.getDepartmentList(searchMap);
+		if(!AssertUtils.isEmpty(departmentInfo)){
+			result = "添加失败，部门名字已存在！";
+		}else{
+			TbDepartmentInfoPO parentDept = searchPOByPk(TbDepartmentInfoPO.class, tbDepartmentInfoPO.getParentDepart());
+			if(AssertUtils.isEmpty(parentDept)){
+				result = "添加失败，父部门不存在！";
+			}else{
+				tbDepartmentInfoPO.setWxParentid(parentDept.getWxId());
+				tbDepartmentInfoPO.setParentDeptName(parentDept.getDepartmentName());
+				tbDepartmentInfoPO.setDeptFullName(parentDept.getDeptFullName()+"-->"+tbDepartmentInfoPO.getDepartmentName());
+				WeiXinDept weiXinDept = new WeiXinDept();
+				weiXinDept.setName(tbDepartmentInfoPO.getDepartmentName());
+				weiXinDept.setParentid(parentDept.getWxId());
+				weiXinDept.setOrder(tbDepartmentInfoPO.getShowOrder());
+				HttpResult httpResult = WeiXinUtils.addDept(WeiXinUtils.getAccessToken("org", AddressbookUtil.getAdminOrgId()),weiXinDept);
+				logger.error(httpResult.toString());
+				JSONObject jsonObject = JSONObject.parseObject(httpResult.getContent());
+				if(httpResult.getCode() != 200){
+					result = "添加微信部门失败！";
+				}else{
+					if(!"0".equals(jsonObject.getString("errcode"))){
+						result = "添加微信部门失败！错误码为："+jsonObject.getString("errcode");
+					}else{
+						String wxId = jsonObject.getString("id");
+						tbDepartmentInfoPO.setId(UUID.randomUUID().toString());
+						tbDepartmentInfoPO.setWxId(wxId);
+						insertPO(tbDepartmentInfoPO);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public List<String> getChildDeptId(Map<String, Object> searchMap) {
+		return addressbookDAO.getChildDeptId(searchMap);
 	}
 }

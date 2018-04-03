@@ -1,5 +1,32 @@
-<html>
-<body>
-<h2>Hello World!</h2>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/common/jsp/context.jsp" %>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <%--<link rel="icon" href="${baseURL}/common/images/favicon.ico">--%>
+
+    <title>测试主页</title>
+
+    <link href="${baseURL}/common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${baseURL}/common/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="${baseURL}/themes/manager/login/css/navbar.css" rel="stylesheet">
+
+    <script src="${baseURL}/common/assets/js/ie8-responsive-file-warning.js"></script>
+    <script src="${baseURL}/common/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <script src="${baseURL}/common/js/html5shiv.min.js"></script>
+    <script src="${baseURL}/common/js/respond.min.js"></script>
+</head>
+
+<body style="padding-top: 0px;padding-bottom: 0px;">
+用户userId为${userId}
+<script src="${baseURL}/common/js/jquery.min.js"></script>
+<script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script>
+</script>
 </body>
 </html>

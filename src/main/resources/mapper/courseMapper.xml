@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zhku.jsj.huangxin.component.course.dao.CourseDAO">
+    <select id="getTermPage" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseTerm">
+        SELECT * FROM tb_course_term
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                term_year like #{searchMap.inputSearch} OR term like #{searchMap.inputSearch}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getCourseTermList" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseTerm">
+        SELECT * FROM tb_course_term
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getCourseTermInfo" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseTerm">
+        SELECT * FROM tb_course_term
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getClassroomPage" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseClassroom">
+        SELECT * FROM tb_course_classroom
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                classroom_name like #{searchMap.inputSearch}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getCourseClassroomInfo" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseClassroom">
+        SELECT * FROM tb_course_classroom
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getCourseTermByTime" resultType="cn.edu.zhku.jsj.huangxin.component.course.model.TbCourseTerm">
+        SELECT * FROM tb_course_term WHERE
+        #{startTime} BETWEEN start_time and end_time
+        OR
+        #{endTime} BETWEEN start_time and end_time
+    </select>
+    <select id="getCoursePage" parameterType="java.util.Map"
+            resultType="cn.edu.zhku.jsj.huangxin.component.course.vo.TbCourseInfo">
+        SELECT * FROM tb_course_info
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                course_name like #{searchMap.inputSearch}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <delete id="delArrangeByCoursId" parameterType="java.lang.String">
+        DELETE FROM tb_course_arrange WHERE course_id = #{courseId}
+    </delete>
+</mapper>

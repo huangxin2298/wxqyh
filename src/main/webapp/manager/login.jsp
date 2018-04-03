@@ -29,8 +29,8 @@
 
 	<form class="form-signin" id="userForm">
 		<h2 class="form-signin-heading">管理后台登录</h2>
-		<label for="userName" class="sr-only">用户名</label>
-		<input type="text" id="userName" name="userName" class="form-control" placeholder="用户名" required autofocus>
+		<label for="account" class="sr-only">用户名</label>
+		<input type="text" id="account" name="account" class="form-control" placeholder="用户名" required autofocus>
 		<label for="password" class="sr-only">密码</label>
 		<input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
 		<input type="button" class="btn btn-lg btn-primary btn-block" value="登录" onclick="loginAdminUser()">
@@ -41,8 +41,8 @@
 <script src="${baseURL}/common/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
 	function loginAdminUser(){
-		if($("#userName")==""){
-		    alert("用户名不能为空");
+		if($("#account")==""){
+		    alert("帐号名不能为空");
 		    return;
 		}
 		if($("#password")==""){
@@ -57,8 +57,8 @@
 			dataType: "json",
             success: function(result) {
                 if(result.code == "0"){
-                    alert(result.describe);
-					window.location.href = "${baseURL}/manager/index.jsp";
+                    var addr = result.data;
+					window.location.href = "${baseURL}"+addr;
                 } else {
                     alert(result.describe);
                 }

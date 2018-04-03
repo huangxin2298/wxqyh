@@ -54,18 +54,29 @@
                 ${key}=#{searchMap.[${key}]}
             </foreach>
         </where>
+        ORDER BY show_order
     </select>
     <select id="getUserList" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbUserInfoPO">
         SELECT * FROM tb_user_info
         <where>
             org_id = #{searchMap.org_id}
-            <if test="searchMap.deptId!=null">
-                AND dept_id = #{searchMap.dept_id}
+            <if test="searchMap.deptIds!=null">
+                AND dept_id in
+                <foreach collection="searchMap.deptIds" item="deptId" open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
             </if>
             <if test="searchMap.inputSearch!=null">
                 AND (user_name like #{searchMap.inputSearch} OR mobile like #{searchMap.inputSearch})
             </if>
         </where>
         ORDER BY user_name
+    </select>
+    <select id="getChildDeptId" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT id FROM tb_department_info
+        <where>
+            org_id = #{searchMap.org_id} AND dept_full_name LIKE #{searchMap.deptFullName}
+        </where>
+        ORDER BY show_order
     </select>
 </mapper>

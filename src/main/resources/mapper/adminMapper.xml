@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zhku.jsj.huangxin.component.admin.dao.AdminDAO">
+    <select id="getAdminUserPage" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.TbAdminUserPO">
+        SELECT * FROM tb_admin_user
+        <where>
+            org_id = #{searchMap.org_id} AND account != 'admin'
+            <if test="searchMap.inputSearch!=null">
+                AND (user_name like #{searchMap.inputSearch} OR account like #{searchMap.inputSearch})
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getConfigPage" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.admin.model.TbAdminConfig">
+        SELECT * FROM tb_admin_config
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                config_name like #{searchMap.inputSearch}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getAdminConfig" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.admin.model.TbAdminConfig">
+        SELECT * FROM tb_admin_config
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getAdminMenuPage" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.admin.model.TbMenuInfo">
+        SELECT * FROM tb_menu_info
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                menu_name like #{searchMap.inputSearch}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getMenuInfo" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.admin.model.TbMenuInfo">
+        SELECT * FROM tb_menu_info
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getAgentPage" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO">
+        SELECT * FROM tb_agent_info
+        <where>
+            <if test="searchMap.inputSearch!=null">
+                (agent_name LIKE #{searchMap.inputSearch} AND agent_code LIKE #{searchMap.inputSearch})
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+    <select id="getAgentInfo" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.addressbook.model.AgentPO">
+        SELECT * FROM tb_agent_info
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+    <select id="getConfigList" parameterType="java.util.Map" resultType="cn.edu.zhku.jsj.huangxin.component.admin.model.TbAdminConfig">
+        SELECT * FROM tb_admin_config
+        <where>
+            <foreach collection="searchMap.keys" item="key" separator="and">
+                ${key}=#{searchMap.[${key}]}
+            </foreach>
+        </where>
+    </select>
+</mapper>
